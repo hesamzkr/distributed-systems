@@ -1,4 +1,4 @@
-from wallet_router import router as wallet_router
+from routers.courier_router import router as courier_router
 
 
-__all__ = ["wallet_router"]
+__all__ = ["courier_router"]
