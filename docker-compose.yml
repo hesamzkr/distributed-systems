@@ -4,9 +4,8 @@ services:
   app:
     build: .
     ports:
-      - "8000:8000"
+      - "3000:3000"
     depends_on:
-      - harbour-cloudcomputing
       - mysql
 
   harbour-cloudcomputing:
@@ -17,12 +16,10 @@ services:
   mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: harbour_food
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
       MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
+      MYSQL_PASSWORD: userpassword
     volumes:
       - mysql_data:/var/lib/mysql
 
