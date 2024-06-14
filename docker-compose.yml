@@ -1,18 +1,62 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
+  app1:
+    build: 
+      context: ./app
+    environment:
+      SERVICE_URL: http://app1:8000
+      PUBLIC_URL: http://localhost:8000
     ports:
       - "8000:8000"
     depends_on:
       - harbour-cloudcomputing
       - mysql
+    networks:
+      - mynetwork
+
+  app2:
+      build: 
+        context: ./app
+      environment:
+        SERVICE_URL: http://app2:8000
+        PUBLIC_URL: http://localhost:8001
+      ports:
+        - "8001:8000"
+      depends_on:
+        - harbour-cloudcomputing
+        - mysql
+      networks:
+        - mynetwork
+
+  app3:
+      build: 
+        context: ./app
+      environment:
+        SERVICE_URL: http://app3:8000
+        PUBLIC_URL: http://localhost:8002
+      ports:
+        - "8002:8000"
+      depends_on:
+        - harbour-cloudcomputing
+        - mysql
+      networks:
+        - mynetwork
 
   harbour-cloudcomputing:
     image: igorsakhankov/harbour-cloudcomputing
     ports:
       - "8181:8080"
+    networks:
+      - mynetwork
+
+  load-balancer:
+    build:
+      context: ./load_balancer
+    ports:
+      - "80:80"
+    networks:
+      - mynetwork
 
   mysql:
     image: mysql:latest
@@ -25,6 +69,11 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
 volumes:
   mysql_data:
+
+networks:
+  mynetwork:
