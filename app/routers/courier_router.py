@@ -9,7 +9,7 @@ router = APIRouter(prefix="/courier")
 
 
 @router.post("/collect_cash")
-def collect_cash(
+async def collect_cash(
     transaction_request: TransactionRequest, db: Session = Depends(get_db)
 ):
-    return collect_cash_controller(transaction_request, db)
+    return await collect_cash_controller(transaction_request, db)
