@@ -24,7 +24,7 @@ async def redirect(path: str):
         service = healthy_services[current_index % len(healthy_services)]
         current_index += 1
 
-    return RedirectResponse(f"{service['public_url']}/{path}", status_code=307)
+    return RedirectResponse(f"{service['public_url']}/{path}", status_code=302)
 
 @app.on_event("startup")
 async def startup_event():
