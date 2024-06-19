@@ -1,4 +1,3 @@
-from fastapi import HTTPException
 from models.transaction import Transaction
 from schemas.courier_schemas import TransactionRequest
 from sqlalchemy.orm import Session
@@ -21,10 +20,12 @@ async def collect_cash_controller(transaction_request: TransactionRequest, db: S
             "description": f"Courier collecting cash {transaction_request.courier_id}",
             "userId": str(transaction_request.courier_id),
         }
-        
+
         @breaker
         async def send_transaction():
-            return await make_request_with_retries("http://harbour-cloudcomputing:8080/v1/wallet/transaction", json_payload)
+            return await make_request_with_retries(
+                "http://harbour-cloudcomputing:8080/v1/wallet/transaction", json_payload
+            )
 
         response = await send_transaction()
 

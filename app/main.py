@@ -1,15 +1,10 @@
 import asyncio
-from contextlib import AsyncExitStack
-from db import get_db
-from schemas.courier_schemas import TransactionRequest
 from utils import register_service
 from fastapi import FastAPI
 
 from routers import courier_router
 
 app = FastAPI()
-
-
 
 
 @app.on_event("startup")
