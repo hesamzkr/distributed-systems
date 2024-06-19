@@ -1,12 +1,12 @@
 import logging
 import os
 
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 
 
 class Config:
     def __init__(self):
-        env_values = dotenv_values()
+        load_dotenv()
         logging.basicConfig(
             filename="app.log",
             level=logging.INFO,
@@ -14,7 +14,8 @@ class Config:
         )
         self.__logger = logging.getLogger()
         self.__logger.info("Config initialized")
-        self.SQL_URI = env_values.get("SQL_URI", "")
+        self.SQL_URI = os.getenv("SQL_URI", "")
+        self.SQL_URI_2 = os.getenv("SQL_URI_2", "")
         self.SERVICE_URL = os.getenv("SERVICE_URL")
         self.PUBLIC_URL = os.getenv("PUBLIC_URL")
 

@@ -12,6 +12,7 @@ services:
     depends_on:
       - harbour-cloudcomputing
       - mysql
+      - mysql2
     networks:
       - mynetwork
 
@@ -26,6 +27,7 @@ services:
       depends_on:
         - harbour-cloudcomputing
         - mysql
+        - mysql2
       networks:
         - mynetwork
 
@@ -40,6 +42,7 @@ services:
       depends_on:
         - harbour-cloudcomputing
         - mysql
+        - mysql2 
       networks:
         - mynetwork
 
@@ -72,8 +75,23 @@ services:
     networks:
       - mynetwork
 
+  mysql2:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: harbour_food
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data_2:/var/lib/mysql
+    networks:
+      - mynetwork
+
 volumes:
   mysql_data:
+  mysql_data_2:
 
 networks:
   mynetwork:

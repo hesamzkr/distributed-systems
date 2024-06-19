@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Float, Integer, String
-from models.base import Base
+from .base import Base
 
 
 class Transaction(Base):
