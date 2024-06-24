@@ -1,4 +1,4 @@
-from contextlib import AsyncExitStack, contextmanager
+from contextlib import AsyncExitStack, asynccontextmanager, contextmanager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -16,6 +16,14 @@ async def get_db_for_transaction(transaction_request: TransactionRequest):
     async with AsyncExitStack() as stack:
         db = stack.enter_context(get_db(transaction_request.courier_id))
         yield db
+
+
+@asynccontextmanager
+async def get_all_dbs():
+    async with AsyncExitStack() as stack:
+        db = stack.enter_context(get_db(1))
+        db2 = stack.enter_context(get_db(2))
+        yield [db, db2]
 
 
 @contextmanager

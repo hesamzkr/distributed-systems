@@ -1,4 +1,5 @@
 import asyncio
+from controllers.courier_controller import process_outbox
 from utils import register_service
 from fastapi import FastAPI
 
@@ -11,6 +12,7 @@ app = FastAPI()
 async def startup_event():
     loop = asyncio.get_event_loop()
     loop.create_task(register_service())
+    loop.create_task(process_outbox())
 
 
 app.include_router(courier_router, tags=["courier"])
